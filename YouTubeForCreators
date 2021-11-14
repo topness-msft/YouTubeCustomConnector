@@ -401,13 +401,17 @@ paths:
               visitorId: {type: string, description: visitorId}
   /youtube/v3/commentThreads:
     get:
-      summary: Comments For Video
-      description: Get comments for a specified video or comma separated list of videos.
-      operationId: CommentsForVideo
+      summary: Comments For Channel
+      description: Get comments for a specified video or comma separated list of videos,
+        or a channel.  Ordered with most recent comments first.
+      operationId: CommentList
       parameters:
       - {name: part, default: 'id,snippet', in: query, type: string, required: true,
         x-ms-visibility: internal}
-      - {name: videoId, default: ZLgvFTOBuSk, in: query, type: string, required: true,
+      - {name: allThreadsRelatedToChannelId, default: ZLgvFTOBuSk, in: query, type: string,
+        required: false, x-ms-summary: Channel Id, description: YouTube channel Id,
+        x-ms-visibility: important}
+      - {name: videoId, default: ZLgvFTOBuSk, in: query, type: string, required: false,
         x-ms-summary: Video Id, description: 'YouTube video Id (ex: dQw4w9WgXcQ)',
         x-ms-visibility: important}
       - {name: maxResults, in: query, type: integer, required: true, x-ms-summary: Max
