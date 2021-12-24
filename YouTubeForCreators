@@ -399,19 +399,72 @@ paths:
                 properties: {}
                 description: tokenPagination
               visitorId: {type: string, description: visitorId}
+    put:
+      summary: Update Channel Trailer
+      description: Gets details for the logged in user's channel.
+      operationId: UpdateChannelTrailer
+      parameters:
+      - {name: part, default: brandingSettings, in: query, type: string, required: true,
+        x-ms-visibility: internal}
+      - name: body
+        in: body
+        schema:
+          type: object
+          properties:
+            id:
+              type: string
+              description: id
+              title: Channel Id
+              x-ms-dynamic-values:
+                operationId: MyChannelDetails
+                value-path: id
+                value-collection: items
+                value-title: snippet/title
+                parameters: {part: 'snippet,contentDetails,statistics'}
+            brandingSettings:
+              type: object
+              properties:
+                channel:
+                  type: object
+                  properties:
+                    unsubscribedTrailer: {type: string, description: unsubscribedTrailer,
+                      title: Video Id}
+                  description: channel
+              description: brandingSettings
+          default:
+            id: UCEzXu1FlO5CBfUiEMyHm8BA
+            brandingSettings:
+              channel: {unsubscribedTrailer: eOznlJgavHo}
+        required: true
+      responses:
+        '200':
+          description: '200'
+          schema:
+            type: object
+            properties:
+              kind: {type: string, description: kind}
+              etag: {type: string, description: etag}
+              id: {type: string, description: id}
+              brandingSettings:
+                type: object
+                properties:
+                  channel:
+                    type: object
+                    properties:
+                      title: {type: string, description: title}
+                      unsubscribedTrailer: {type: string, description: unsubscribedTrailer}
+                      defaultLanguage: {type: string, description: defaultLanguage}
+                    description: channel
+                description: brandingSettings
   /youtube/v3/commentThreads:
     get:
-      summary: Comments For Channel
-      description: Get comments for a specified video or comma separated list of videos,
-        or a channel.  Ordered with most recent comments first.
-      operationId: CommentList
+      summary: Comments For Video
+      description: Get comments for a specified video or comma separated list of videos.
+      operationId: CommentsForVideo
       parameters:
       - {name: part, default: 'id,snippet', in: query, type: string, required: true,
         x-ms-visibility: internal}
-      - {name: allThreadsRelatedToChannelId, default: ZLgvFTOBuSk, in: query, type: string,
-        required: false, x-ms-summary: Channel Id, description: YouTube channel Id,
-        x-ms-visibility: important}
-      - {name: videoId, default: ZLgvFTOBuSk, in: query, type: string, required: false,
+      - {name: videoId, default: ZLgvFTOBuSk, in: query, type: string, required: true,
         x-ms-summary: Video Id, description: 'YouTube video Id (ex: dQw4w9WgXcQ)',
         x-ms-visibility: important}
       - {name: maxResults, in: query, type: integer, required: true, x-ms-summary: Max
@@ -642,17 +695,29 @@ paths:
             snippet:
               type: object
               properties:
-                playlistId: {type: string, description: playlistId, title: Playlist
-                    Id}
+                playlistId:
+                  type: string
+                  description: playlistId
+                  title: Playlist Id
+                  x-ms-dynamic-values:
+                    operationId: ListAllPlaylists
+                    value-path: id
+                    value-collection: items
+                    value-title: snippet/title
+                    parameters: {part: 'id,status,snippet', maxResults: 50}
                 position: {type: integer, format: int32, description: position, title: Playlist
                     Position (zero based)}
                 resourceId:
                   type: object
                   properties:
-                    kind: {type: string, description: kind, x-ms-visibility: internal}
+                    kind: {type: string, description: kind, x-ms-visibility: internal,
+                      title: '', default: youtube#video}
                     videoId: {type: string, description: videoId, title: Video Id}
                   description: resourceId
+                  required: [videoId, kind]
               description: snippet
+              required: [playlistId, resourceId]
+          required: [snippet]
         required: true
       responses:
         '200':
@@ -660,140 +725,35 @@ paths:
           schema:
             type: object
             properties:
-              contentDetails:
-                type: object
-                properties:
-                  endAt: {type: string, description: endAt}
-                  note: {type: string, description: note}
-                  startAt: {type: string, description: startAt}
-                  videoId: {type: string, description: videoId}
-                  videoPublishedAt: {type: string, description: videoPublishedAt}
-                description: contentDetails
-              etag: {type: string, description: etag}
-              id: {type: string, description: id}
-              kind: {type: string, description: kind}
+              kind: {type: string, description: kind, title: '', x-ms-visibility: internal}
+              etag: {type: string, description: etag, title: Etag, x-ms-visibility: internal}
+              id: {type: string, description: id, title: '', x-ms-visibility: internal}
               snippet:
                 type: object
                 properties:
-                  channelId: {type: string, description: channelId}
-                  channelTitle: {type: string, description: channelTitle}
-                  description: {type: string, description: description}
-                  playlistId: {type: string, description: playlistId}
-                  position: {type: integer, format: int32, description: position}
-                  publishedAt: {type: string, description: publishedAt}
+                  publishedAt: {type: string, description: publishedAt, title: Published
+                      At, format: date-time}
+                  channelId: {type: string, description: channelId, title: Channel
+                      Id}
+                  title: {type: string, description: title, title: Video Title}
+                  description: {type: string, description: description, title: Description}
+                  channelTitle: {type: string, description: channelTitle, title: Channel
+                      Title}
+                  playlistId: {type: string, description: playlistId, title: Playlist
+                      Id}
+                  position: {type: integer, format: int32, description: position,
+                    title: Position}
                   resourceId:
                     type: object
                     properties:
-                      channelId:
-                        type: object
-                        properties:
-                          value: {type: string, description: value}
-                        description: channelId
-                      kind:
-                        type: object
-                        properties:
-                          value: {type: string, description: value}
-                        description: kind
-                      playlistId:
-                        type: object
-                        properties:
-                          value: {type: string, description: value}
-                        description: playlistId
-                      videoId:
-                        type: object
-                        properties:
-                          value: {type: string, description: value}
-                        description: videoId
+                      kind: {type: string, description: kind, title: '', x-ms-visibility: internal}
+                      videoId: {type: string, description: videoId, title: Video Id}
                     description: resourceId
-                  thumbnails:
-                    type: object
-                    properties:
-                      high:
-                        type: object
-                        properties:
-                          height:
-                            type: object
-                            properties:
-                              value: {type: string, description: value}
-                            description: height
-                          url:
-                            type: object
-                            properties:
-                              value: {type: string, description: value}
-                            description: url
-                          width:
-                            type: object
-                            properties:
-                              value: {type: string, description: value}
-                            description: width
-                        description: high
-                      maxres:
-                        type: object
-                        properties:
-                          height:
-                            type: object
-                            properties:
-                              value: {type: string, description: value}
-                            description: height
-                          url:
-                            type: object
-                            properties:
-                              value: {type: string, description: value}
-                            description: url
-                          width:
-                            type: object
-                            properties:
-                              value: {type: string, description: value}
-                            description: width
-                        description: maxres
-                      medium:
-                        type: object
-                        properties:
-                          height:
-                            type: object
-                            properties:
-                              value: {type: string, description: value}
-                            description: height
-                          url:
-                            type: object
-                            properties:
-                              value: {type: string, description: value}
-                            description: url
-                          width:
-                            type: object
-                            properties:
-                              value: {type: string, description: value}
-                            description: width
-                        description: medium
-                      standard:
-                        type: object
-                        properties:
-                          height:
-                            type: object
-                            properties:
-                              value: {type: string, description: value}
-                            description: height
-                          url:
-                            type: object
-                            properties:
-                              value: {type: string, description: value}
-                            description: url
-                          width:
-                            type: object
-                            properties:
-                              value: {type: string, description: value}
-                            description: width
-                        description: standard
-                    description: thumbnails
-                  title: {type: string, description: title}
-                  videoOwnerChannelId: {type: string, description: videoOwnerChannelId}
-                  videoOwnerChannelTitle: {type: string, description: videoOwnerChannelTitle}
+                  videoOwnerChannelTitle: {type: string, description: videoOwnerChannelTitle,
+                    title: Channel Title}
+                  videoOwnerChannelId: {type: string, description: videoOwnerChannelId,
+                    title: Channel Id}
                 description: snippet
-              status:
-                type: object
-                properties:
-                  privacyStatus: {type: string, description: privacyStatus}
-                description: status
   /youtube/v3/playlists:
     get:
       summary: List All Playlists
@@ -895,8 +855,8 @@ paths:
       description: Get metadata for a video or comma separated list of videos.
       operationId: GetVideoDetails
       parameters:
-      - {name: part, default: 'id,status,statistics,fileDetails,snippet', in: query,
-        type: string, required: true, x-ms-visibility: internal}
+      - {name: part, default: 'id,status,statistics,snippet', in: query, type: string,
+        required: true, x-ms-visibility: internal}
       - {name: id, in: query, type: string, required: true, x-ms-summary: Video Id,
         description: 'YouTube video Id (ex: dQw4w9WgXcQ)', x-ms-visibility: important}
       responses:
@@ -1075,12 +1035,14 @@ paths:
                   description: privacyStatus
                   title: Privacy Status
                   enum: [public, unlisted, private]
+                  x-ms-visibility: advanced
               description: status
             snippet:
               type: object
               properties:
-                title: {type: string, description: Video Title, title: Title, x-ms-visibility: important}
-                description: {type: string, description: Long form description, title: Description}
+                title: {type: string, description: Video Title, title: Title, x-ms-visibility: advanced}
+                description: {type: string, description: Long form description, title: Description,
+                  x-ms-visibility: advanced}
                 categoryId:
                   type: integer
                   description: categoryId
@@ -1096,6 +1058,7 @@ paths:
                 tags: {type: string, description: Comma separated list of keywords,
                   title: Keywords}
               description: snippet
+          required: [id]
         required: true
       responses:
         '200':
