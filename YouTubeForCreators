@@ -75,330 +75,106 @@ paths:
           schema:
             type: object
             properties:
+              kind: {type: string, description: kind, title: '', x-ms-visibility: internal}
               etag: {type: string, description: etag, title: '', x-ms-visibility: internal}
-              eventId: {type: string, description: eventId, title: '', x-ms-visibility: internal}
+              pageInfo:
+                type: object
+                properties:
+                  totalResults: {type: integer, format: int32, description: totalResults,
+                    title: Total Results}
+                  resultsPerPage: {type: integer, format: int32, description: resultsPerPage,
+                    title: Results Per Page}
+                description: pageInfo
               items:
                 type: array
                 items:
                   type: object
                   properties:
-                    auditDetails:
+                    kind: {type: string, description: kind, title: '', x-ms-visibility: internal}
+                    etag: {type: string, description: etag, title: '', x-ms-visibility: internal}
+                    id: {type: string, description: id, title: Channel Id}
+                    snippet:
                       type: object
                       properties:
-                        communityGuidelinesGoodStanding: {type: boolean, description: communityGuidelinesGoodStanding}
-                        contentIdClaimsGoodStanding: {type: boolean, description: contentIdClaimsGoodStanding}
-                        copyrightStrikesGoodStanding: {type: boolean, description: copyrightStrikesGoodStanding}
-                      description: auditDetails
-                    brandingSettings:
-                      type: object
-                      properties:
-                        channel:
+                        title: {type: string, description: title, title: Localized
+                            Title}
+                        description: {type: string, description: description, title: Channel
+                            Description}
+                        customUrl: {type: string, description: customUrl, title: Custom
+                            Url}
+                        publishedAt: {type: string, description: publishedAt, title: Pulblished
+                            At}
+                        thumbnails:
                           type: object
                           properties:
-                            country: {type: string, description: country}
-                            defaultLanguage: {type: string, description: defaultLanguage}
-                            defaultTab: {type: string, description: defaultTab}
-                            description: {type: string, description: description}
-                            featuredChannelsTitle: {type: string, description: featuredChannelsTitle}
-                            featuredChannelsUrls:
-                              type: array
-                              items: {type: string}
-                              description: featuredChannelsUrls
-                            keywords: {type: string, description: keywords}
-                            moderateComments: {type: boolean, description: moderateComments}
-                            profileColor: {type: string, description: profileColor}
-                            showBrowseView: {type: boolean, description: showBrowseView}
-                            showRelatedChannels: {type: boolean, description: showRelatedChannels}
-                            title: {type: string, description: title}
-                            trackingAnalyticsAccountId: {type: string, description: trackingAnalyticsAccountId}
-                            unsubscribedTrailer: {type: string, description: unsubscribedTrailer}
-                          description: channel
-                        hints:
-                          type: array
-                          items:
-                            type: object
-                            properties:
-                              property: {type: string, description: property}
-                              value: {type: string, description: value}
-                          description: hints
-                        image:
+                            default:
+                              type: object
+                              properties:
+                                url: {type: string, description: url, title: Default
+                                    Thumbnail Url}
+                                width: {type: integer, format: int32, description: width,
+                                  title: Default Thumbnail Width}
+                                height: {type: integer, format: int32, description: height,
+                                  title: Default Thumbnail Height}
+                              description: default
+                            medium:
+                              type: object
+                              properties:
+                                url: {type: string, description: url, title: High
+                                    Thumbnail Url}
+                                width: {type: integer, format: int32, description: width,
+                                  title: High Thumbnail Width}
+                                height: {type: integer, format: int32, description: height,
+                                  title: High Thumbnail Height}
+                              description: medium
+                            high:
+                              type: object
+                              properties:
+                                url: {type: string, description: url, title: Medium
+                                    Thumbnail Url}
+                                width: {type: integer, format: int32, description: width,
+                                  title: Medium Thumbnail Width}
+                                height: {type: integer, format: int32, description: height,
+                                  title: Medium Thumbnail Height}
+                              description: high
+                          description: thumbnails
+                        defaultLanguage: {type: string, description: defaultLanguage,
+                          title: Default Language}
+                        localized:
                           type: object
                           properties:
-                            backgroundImageUrl:
-                              type: object
-                              properties:
-                                defaultLanguage:
-                                  type: object
-                                  properties:
-                                    value: {type: string, description: value}
-                                  description: defaultLanguage
-                                localized:
-                                  type: object
-                                  properties:
-                                    value: {type: string, description: value}
-                                  description: localized
-                              description: backgroundImageUrl
-                            bannerExternalUrl: {type: string, description: bannerExternalUrl}
-                            bannerImageUrl: {type: string, description: bannerImageUrl}
-                            bannerMobileExtraHdImageUrl: {type: string, description: bannerMobileExtraHdImageUrl}
-                            bannerMobileHdImageUrl: {type: string, description: bannerMobileHdImageUrl}
-                            bannerMobileImageUrl: {type: string, description: bannerMobileImageUrl}
-                            bannerMobileLowImageUrl: {type: string, description: bannerMobileLowImageUrl}
-                            bannerMobileMediumHdImageUrl: {type: string, description: bannerMobileMediumHdImageUrl}
-                            bannerTabletExtraHdImageUrl: {type: string, description: bannerTabletExtraHdImageUrl}
-                            bannerTabletHdImageUrl: {type: string, description: bannerTabletHdImageUrl}
-                            bannerTabletImageUrl: {type: string, description: bannerTabletImageUrl}
-                            bannerTabletLowImageUrl: {type: string, description: bannerTabletLowImageUrl}
-                            bannerTvHighImageUrl: {type: string, description: bannerTvHighImageUrl}
-                            bannerTvImageUrl: {type: string, description: bannerTvImageUrl}
-                            bannerTvLowImageUrl: {type: string, description: bannerTvLowImageUrl}
-                            bannerTvMediumImageUrl: {type: string, description: bannerTvMediumImageUrl}
-                            largeBrandedBannerImageImapScript:
-                              type: object
-                              properties:
-                                defaultLanguage:
-                                  type: object
-                                  properties:
-                                    value: {type: string, description: value}
-                                  description: defaultLanguage
-                                localized:
-                                  type: object
-                                  properties:
-                                    value: {type: string, description: value}
-                                  description: localized
-                              description: largeBrandedBannerImageImapScript
-                            largeBrandedBannerImageUrl:
-                              type: object
-                              properties:
-                                defaultLanguage:
-                                  type: object
-                                  properties:
-                                    value: {type: string, description: value}
-                                  description: defaultLanguage
-                                localized:
-                                  type: object
-                                  properties:
-                                    value: {type: string, description: value}
-                                  description: localized
-                              description: largeBrandedBannerImageUrl
-                            smallBrandedBannerImageImapScript:
-                              type: object
-                              properties:
-                                defaultLanguage:
-                                  type: object
-                                  properties:
-                                    value: {type: string, description: value}
-                                  description: defaultLanguage
-                                localized:
-                                  type: object
-                                  properties:
-                                    value: {type: string, description: value}
-                                  description: localized
-                              description: smallBrandedBannerImageImapScript
-                            smallBrandedBannerImageUrl:
-                              type: object
-                              properties:
-                                defaultLanguage:
-                                  type: object
-                                  properties:
-                                    value: {type: string, description: value}
-                                  description: defaultLanguage
-                                localized:
-                                  type: object
-                                  properties:
-                                    value: {type: string, description: value}
-                                  description: localized
-                              description: smallBrandedBannerImageUrl
-                            trackingImageUrl: {type: string, description: trackingImageUrl}
-                            watchIconImageUrl: {type: string, description: watchIconImageUrl}
-                          description: image
-                        watch:
-                          type: object
-                          properties:
-                            backgroundColor: {type: string, description: backgroundColor}
-                            featuredPlaylistId: {type: string, description: featuredPlaylistId}
-                            textColor: {type: string, description: textColor}
-                          description: watch
-                      description: brandingSettings
+                            title: {type: string, description: title, title: Localized
+                                Title}
+                            description: {type: string, description: description,
+                              title: Localized Description}
+                          description: localized
+                      description: snippet
                     contentDetails:
                       type: object
                       properties:
                         relatedPlaylists:
                           type: object
                           properties:
-                            favorites: {type: string, description: favorites}
-                            likes: {type: string, description: likes}
-                            uploads: {type: string, description: uploads}
-                            watchHistory: {type: string, description: watchHistory}
-                            watchLater: {type: string, description: watchLater}
+                            likes: {type: string, description: likes, title: Likes}
+                            uploads: {type: string, description: uploads, title: Uploads}
                           description: relatedPlaylists
                       description: contentDetails
-                    contentOwnerDetails:
-                      type: object
-                      properties:
-                        contentOwner: {type: string, description: contentOwner}
-                        timeLinked: {type: string, description: timeLinked}
-                      description: contentOwnerDetails
-                    conversionPings:
-                      type: object
-                      properties:
-                        pings:
-                          type: array
-                          items:
-                            type: object
-                            properties:
-                              context: {type: string, description: context}
-                              conversionUrl: {type: string, description: conversionUrl}
-                          description: pings
-                      description: conversionPings
-                    etag: {type: string, description: etag}
-                    id: {type: string, description: id}
-                    kind: {type: string, description: kind}
-                    localizations:
-                      type: object
-                      properties: {}
-                      description: localizations
-                    snippet:
-                      type: object
-                      properties:
-                        country: {type: string, description: country}
-                        customUrl: {type: string, description: customUrl}
-                        defaultLanguage: {type: string, description: defaultLanguage}
-                        description: {type: string, description: description}
-                        localized:
-                          type: object
-                          properties:
-                            description: {type: string, description: description}
-                            title: {type: string, description: title}
-                          description: localized
-                        publishedAt: {type: string, description: publishedAt}
-                        thumbnails:
-                          type: object
-                          properties:
-                            high:
-                              type: object
-                              properties:
-                                height:
-                                  type: object
-                                  properties:
-                                    value: {type: string, description: value}
-                                  description: height
-                                url:
-                                  type: object
-                                  properties:
-                                    value: {type: string, description: value}
-                                  description: url
-                                width:
-                                  type: object
-                                  properties:
-                                    value: {type: string, description: value}
-                                  description: width
-                              description: high
-                            maxres:
-                              type: object
-                              properties:
-                                height:
-                                  type: object
-                                  properties:
-                                    value: {type: string, description: value}
-                                  description: height
-                                url:
-                                  type: object
-                                  properties:
-                                    value: {type: string, description: value}
-                                  description: url
-                                width:
-                                  type: object
-                                  properties:
-                                    value: {type: string, description: value}
-                                  description: width
-                              description: maxres
-                            medium:
-                              type: object
-                              properties:
-                                height:
-                                  type: object
-                                  properties:
-                                    value: {type: string, description: value}
-                                  description: height
-                                url:
-                                  type: object
-                                  properties:
-                                    value: {type: string, description: value}
-                                  description: url
-                                width:
-                                  type: object
-                                  properties:
-                                    value: {type: string, description: value}
-                                  description: width
-                              description: medium
-                            standard:
-                              type: object
-                              properties:
-                                height:
-                                  type: object
-                                  properties:
-                                    value: {type: string, description: value}
-                                  description: height
-                                url:
-                                  type: object
-                                  properties:
-                                    value: {type: string, description: value}
-                                  description: url
-                                width:
-                                  type: object
-                                  properties:
-                                    value: {type: string, description: value}
-                                  description: width
-                              description: standard
-                          description: thumbnails
-                        title: {type: string, description: title}
-                      description: snippet
                     statistics:
                       type: object
                       properties:
-                        commentCount: {type: string, description: commentCount}
-                        hiddenSubscriberCount: {type: boolean, description: hiddenSubscriberCount}
-                        subscriberCount: {type: string, description: subscriberCount}
-                        videoCount: {type: string, description: videoCount}
-                        viewCount: {type: string, description: viewCount}
+                        viewCount: {type: string, description: viewCount, title: View
+                            Count}
+                        subscriberCount: {type: string, description: subscriberCount,
+                          title: Subscriber Count}
+                        hiddenSubscriberCount:
+                          type: boolean
+                          description: hiddenSubscriberCount
+                          title: Subscriber Count Is Hidden
+                          enum: ['', 'true', 'false']
+                        videoCount: {type: string, description: videoCount, title: Video
+                            Count}
                       description: statistics
-                    status:
-                      type: object
-                      properties:
-                        isLinked: {type: boolean, description: isLinked}
-                        longUploadsStatus: {type: string, description: longUploadsStatus}
-                        madeForKids: {type: boolean, description: madeForKids}
-                        privacyStatus: {type: string, description: privacyStatus}
-                        selfDeclaredMadeForKids: {type: boolean, description: selfDeclaredMadeForKids}
-                      description: status
-                    topicDetails:
-                      type: object
-                      properties:
-                        topicCategories:
-                          type: array
-                          items: {type: string}
-                          description: topicCategories
-                        topicIds:
-                          type: array
-                          items: {type: string}
-                          description: topicIds
-                      description: topicDetails
                 description: items
-              kind: {type: string, description: kind}
-              nextPageToken: {type: string, description: nextPageToken}
-              pageInfo:
-                type: object
-                properties:
-                  resultsPerPage: {type: integer, format: int32, description: resultsPerPage}
-                  totalResults: {type: integer, format: int32, description: totalResults}
-                description: pageInfo
-              prevPageToken: {type: string, description: prevPageToken}
-              tokenPagination:
-                type: object
-                properties: {}
-                description: tokenPagination
-              visitorId: {type: string, description: visitorId}
     put:
       summary: Update Channel Trailer
       description: Gets details for the logged in user's channel.
@@ -855,8 +631,8 @@ paths:
       description: Get metadata for a video or comma separated list of videos.
       operationId: GetVideoDetails
       parameters:
-      - {name: part, default: 'id,status,statistics,snippet', in: query, type: string,
-        required: true, x-ms-visibility: internal}
+      - {name: part, default: 'id,status,statistics,snippet,contentDetails', in: query,
+        type: string, required: true, x-ms-visibility: internal}
       - {name: id, in: query, type: string, required: true, x-ms-summary: Video Id,
         description: 'YouTube video Id (ex: dQw4w9WgXcQ)', x-ms-visibility: important}
       responses:
@@ -940,6 +716,28 @@ paths:
                         defaultAudioLanguage: {type: string, description: defaultAudioLanguage,
                           title: Default Audio Language}
                       description: snippet
+                    contentDetails:
+                      type: object
+                      properties:
+                        duration: {type: string, description: Duration in PTxxMxxS
+                            format, title: Duration}
+                        dimension: {type: string, description: dimension, x-ms-visibility: internal}
+                        definition: {type: string, description: definition, x-ms-visibility: internal}
+                        caption: {type: string, description: Is Captioned, title: Is
+                            Captioned}
+                        licensedContent: {type: boolean, description: licensedContent,
+                          x-ms-visibility: internal}
+                        contentRating:
+                          type: object
+                          properties: {}
+                          description: contentRating
+                        projection: {type: string, description: projection, x-ms-visibility: internal}
+                        hasCustomThumbnail:
+                          type: boolean
+                          description: Has Custom Thumbnail
+                          title: Has Custom Thumbnail
+                          enum: ['', 'true', 'false']
+                      description: contentDetails
                     status:
                       type: object
                       properties:
